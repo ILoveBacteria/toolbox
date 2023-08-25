@@ -2,6 +2,6 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('video/', download_video, name='download_video'),
-    path('playlist/', download_playlist, name='download_playlist')
+    path('video/', video, name='video'),
+    path('playlist/', playlist, name='playlist')
 ]
