@@ -1,10 +1,11 @@
 from django.shortcuts import render, HttpResponse
+from django.contrib.auth.decorators import login_required
 from .forms import *
 from pytube import YouTube, Playlist
 import threading
 
 
-# TODO: Login required
+@login_required
 def video(request):
     if request.method == "POST":
         form = DownloadVideoForm(request.POST)
@@ -12,12 +13,18 @@ def video(request):
             link = form.cleaned_data['link']
             threading.Thread(target=download_video, args=(link,)).start()
             return HttpResponse('Download in progress...')
-        return render(request, 'youtube/download_video.html', context={'form': form}, status=400)
+        return render(
+            request,
+            'youtube/download_video.html',
+            context={'form': form, 'title': 'Download Video'},
+            status=400,
+        )
     else:
         form = DownloadVideoForm()
-        return render(request, 'youtube/download_video.html', context={'form': form})
+        return render(request, 'youtube/download_video.html', context={'form': form, 'title': 'Download Video'})
 
 
+@login_required
 def playlist(request):
     if request.method == "POST":
         form = DownloadPlaylistForm(request.POST)
@@ -31,17 +38,22 @@ def playlist(request):
                 )
             ).start()
             return HttpResponse('Download in progress...')
-        return render(request, 'youtube/download_playlist.html', context={'form': form}, status=400)
+        return render(
+            request,
+            'youtube/download_playlist.html',
+            context={'form': form, 'title': 'Download Playlist'},
+            status=400,
+        )
     else:
         form = DownloadPlaylistForm()
-        return render(request, 'youtube/download_playlist.html', context={'form': form})
+        return render(request, 'youtube/download_playlist.html', context={'form': form, 'title': 'Download Playlist'})
 
 
 def download_video(url: str):
     YouTube(url) \
         .streams \
         .get_highest_resolution() \
-        .download(output_path='youtube/downloads/videos')
+        .download(output_path='~/share/youtube/videos')
 
 
 def download_playlist(url: str, from_episode: int, to_episode: int):
@@ -49,6 +61,6 @@ def download_playlist(url: str, from_episode: int, to_episode: int):
     for url in list(p)[from_episode:to_episode + 1]:
         YouTube(url).streams \
             .get_highest_resolution() \
-            .download(output_path=f'youtube/downloads/playlists/{p.title}')
+            .download(output_path=f'~/share/youtube/playlists/{p.title}')
 
 # TODO: track last updated videos and download them
