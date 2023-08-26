@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from pytube import YouTube, Playlist
+from server_admin.config_loader import config
 import threading
 
 
@@ -53,7 +54,7 @@ def download_video(url: str):
     YouTube(url) \
         .streams \
         .get_highest_resolution() \
-        .download(output_path='~/share/youtube/videos')
+        .download(output_path=f'{config["FILE_SERVER"]}/youtube/videos')
 
 
 def download_playlist(url: str, from_episode: int, to_episode: int):
@@ -61,6 +62,6 @@ def download_playlist(url: str, from_episode: int, to_episode: int):
     for url in list(p)[from_episode:to_episode + 1]:
         YouTube(url).streams \
             .get_highest_resolution() \
-            .download(output_path=f'~/share/youtube/playlists/{p.title}')
+            .download(output_path=f'{config["FILE_SERVER"]}/youtube/playlists/{p.title}')
 
 # TODO: track last updated videos and download them
