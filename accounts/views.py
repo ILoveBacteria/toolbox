@@ -6,19 +6,19 @@ from .forms import LoginForm
 
 
 class Login(View):
-    def post(self):
-        form = LoginForm(self.request.POST)
+    def post(self, request):
+        form = LoginForm(request.POST)
         if form.is_valid():
-            user = authenticate(self.request, username=form.cleaned_data['username'],
+            user = authenticate(request, username=form.cleaned_data['username'],
                                 password=form.cleaned_data['password'])
             if user is not None:
-                login(self.request, user)
-                if (next_view := self.request.GET['next']) is not None:
-                    return redirect(next_view)
+                login(request, user)
+                if 'next' in request.GET:
+                    return redirect(request.GET['next'])
                 return redirect('/')
             form.add_error(None, 'Username or password is incorrect!')
-        return render(self.request, 'accounts/login.html', context={'form': form, 'title': 'Login'}, status=400)
+        return render(request, 'accounts/login.html', context={'form': form, 'title': 'Login'}, status=400)
 
-    def get(self):
+    def get(self, request):
         form = LoginForm()
-        return render(self.request, 'accounts/login.html', context={'form': form, 'title': 'Login'})
+        return render(request, 'accounts/login.html', context={'form': form, 'title': 'Login'})
