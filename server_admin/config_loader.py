@@ -3,7 +3,7 @@ import os
 
 
 FILE1 = 'config.toml'
-FILE2 = '/etc/django-server-admin/config.toml'
+FILE2 = '/etc/django-server.toml'
 config = None
 if os.path.exists(FILE1):
     with open(FILE1, 'rb') as f:
