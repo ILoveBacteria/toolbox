@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+import core.views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('youtube/', include('youtube.urls')),
     path('accounts/', include('accounts.urls')),
+    path('', core.views.index, name='index'),
 ]
