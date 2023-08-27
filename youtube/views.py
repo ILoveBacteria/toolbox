@@ -61,7 +61,7 @@ def download_video(url: str):
 
 def download_playlist(url: str, from_episode: int, to_episode: int):
     p = Playlist(url)
-    for url in list(p)[from_episode:to_episode + 1]:
+    for url in list(p)[from_episode - 1:to_episode]:
         dest = YouTube(url).streams \
             .get_highest_resolution() \
             .download(output_path=f'{config["FILE_SERVER"]}/youtube/playlists/{p.title}')
