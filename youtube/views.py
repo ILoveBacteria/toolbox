@@ -51,17 +51,20 @@ def playlist(request):
 
 
 def download_video(url: str):
-    YouTube(url) \
+    # TODO: Log correctly
+    dest = YouTube(url) \
         .streams \
         .get_highest_resolution() \
         .download(output_path=f'{config["FILE_SERVER"]}/youtube/videos')
+    print(f'Video downloaded to {dest}')
 
 
 def download_playlist(url: str, from_episode: int, to_episode: int):
     p = Playlist(url)
     for url in list(p)[from_episode:to_episode + 1]:
-        YouTube(url).streams \
+        dest = YouTube(url).streams \
             .get_highest_resolution() \
             .download(output_path=f'{config["FILE_SERVER"]}/youtube/playlists/{p.title}')
+        print(f'Video downloaded to {dest}')
 
 # TODO: track last updated videos and download them
