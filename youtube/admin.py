@@ -1,15 +1,15 @@
 from django.contrib import admin
-from .models import VideoModel, PlaylistModel
+from .models import Video, Playlist
 
 
-@admin.register(VideoModel)
+@admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
     list_display = ('title', 'status', 'playlist')
 
 
-@admin.register(PlaylistModel)
+@admin.register(Playlist)
 class PlaylistAdmin(admin.ModelAdmin):
     list_display = ('title', 'count_videos')
 
-    def count_videos(self, obj: PlaylistModel):
-        return obj.videomodel_set.count()
+    def count_videos(self, obj: Playlist):
+        return obj.video_set.count()

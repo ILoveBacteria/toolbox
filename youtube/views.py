@@ -1,10 +1,11 @@
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth.decorators import login_required
 from .forms import *
+from .models import Video
+from .models import Playlist as PlaylistModel
 from pytube import YouTube, Playlist
 from server_admin.config_loader import config
 import threading
-from .models import VideoModel, PlaylistModel
 
 
 @login_required
@@ -55,7 +56,7 @@ def download_video(url: str):
     # TODO: Log correctly
     # TODO: Fail handling here and on the forms
     v = YouTube(url)
-    video_instance = VideoModel.objects.create(title=v.title)
+    video_instance = Video.objects.create(title=v.title)
     destination_saved_path = v \
         .streams \
         .get_highest_resolution() \

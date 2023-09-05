@@ -1,14 +1,14 @@
 from django.db import models
 
 
-class PlaylistModel(models.Model):
+class Playlist(models.Model):
     title = models.CharField(max_length=255)
 
     def __str__(self):
         return self.title
 
 
-class VideoModel(models.Model):
+class Video(models.Model):
     # TODO: On delete -> delete files
     # TODO: Change fields type
     DOWNLOAD_STATUS = (
@@ -20,7 +20,7 @@ class VideoModel(models.Model):
     status = models.CharField(choices=DOWNLOAD_STATUS, max_length=255, default='D')
     saved_path = models.CharField(max_length=255, null=True)
     download_url = models.CharField(max_length=255, null=True)
-    playlist = models.ForeignKey('PlaylistModel', on_delete=models.CASCADE, null=True)
+    playlist = models.ForeignKey('Playlist', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
