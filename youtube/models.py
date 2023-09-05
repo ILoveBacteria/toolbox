@@ -1,3 +1,26 @@
 from django.db import models
 
-# Create your models here.
+
+class PlaylistModel(models.Model):
+    title = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
+
+
+class VideoModel(models.Model):
+    # TODO: On delete -> delete files
+    # TODO: Change fields type
+    DOWNLOAD_STATUS = (
+        ('D', 'Downloading'),
+        ('C', 'Complete'),
+        ('F', 'Fail'),
+    )
+    title = models.CharField(max_length=255)
+    status = models.CharField(choices=DOWNLOAD_STATUS, max_length=255, default='D')
+    saved_path = models.CharField(max_length=255, null=True)
+    download_url = models.CharField(max_length=255, null=True)
+    playlist = models.ForeignKey('PlaylistModel', on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.title
