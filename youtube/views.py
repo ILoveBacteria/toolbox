@@ -4,6 +4,7 @@ from .forms import *
 from pytube import YouTube, Playlist
 from server_admin.config_loader import config
 import threading
+from .models import VideoModel, PlaylistModel
 
 
 @login_required
@@ -52,19 +53,29 @@ def playlist(request):
 
 def download_video(url: str):
     # TODO: Log correctly
-    dest = YouTube(url) \
+    # TODO: Fail handling here and on the forms
+    v = YouTube(url)
+    video_instance = VideoModel.objects.create(title=v.title)
+    destination_saved_path = v \
         .streams \
         .get_highest_resolution() \
         .download(output_path=f'{config["FILE_SERVER"]}/youtube/videos')
-    print(f'Video downloaded to {dest}')
+    video_instance.status = 'C'
+    video_instance.saved_path = destination_saved_path
+    video_instance.save()
 
 
 def download_playlist(url: str, from_episode: int, to_episode: int):
     p = Playlist(url)
+    playlist_instance = PlaylistModel.objects.create(title=p.title)
     for url in list(p)[from_episode - 1:to_episode]:
-        dest = YouTube(url).streams \
+        v = YouTube(url)
+        video_instance = playlist_instance.videomodel_set.create(title=v.title)
+        destination_saved_path = v.streams \
             .get_highest_resolution() \
             .download(output_path=f'{config["FILE_SERVER"]}/youtube/playlists/{p.title}')
-        print(f'Video downloaded to {dest}')
+        video_instance.status = 'C'
+        video_instance.saved_path = destination_saved_path
+        video_instance.save()
 
 # TODO: track last updated videos and download them
