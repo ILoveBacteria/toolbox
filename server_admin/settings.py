@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'youtube',
     'core',
     'accounts',
+    'website',
 ]
 
 MIDDLEWARE = [

@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('youtube/', include('youtube.urls')),
     path('accounts/', include('accounts.urls')),
+    path('website/', include('website.urls')),
     path('', core.views.index, name='index'),
 ]
