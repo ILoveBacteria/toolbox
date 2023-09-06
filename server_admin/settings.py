@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-l1=(*ss$nlmv9-y_1tnn$fg&n&)66-ibx*g@fh+*0d0#0$*zu+'
+SECRET_KEY = config['SETTING']['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config['SETTING']['DEBUG']
@@ -124,9 +124,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CORS_ALLOWED_ORIGINS = config['SETTING']['CORS_ALLOWED_ORIGINS']
 
-# CORS_ALLOWED_ORIGINS = [
-#     'https://moeinarabi.ir',
-# ]
+SECURE_SSL_REDIRECT = config['SETTING']['SECURE_SSL_REDIRECT']
 
-CORS_ALLOW_ALL_ORIGINS = True
+SESSION_COOKIE_SECURE = config['SETTING']['SESSION_COOKIE_SECURE']
+
+CSRF_COOKIE_SECURE = config['SETTING']['CSRF_COOKIE_SECURE']
