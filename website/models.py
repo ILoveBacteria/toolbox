@@ -13,6 +13,7 @@ class Education(models.Model):
 
 class Experience(models.Model):
     title = models.CharField(max_length=255)
+    subtitle = models.CharField(max_length=255)
     date = models.CharField(max_length=255)
     skills = models.CharField(max_length=255)
 
