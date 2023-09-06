@@ -7,11 +7,17 @@ class Education(models.Model):
     date = models.CharField(max_length=255)
     skills = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.title
+
 
 class Experience(models.Model):
     title = models.CharField(max_length=255)
     date = models.CharField(max_length=255)
     skills = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
 
 
 class Certificate(models.Model):
@@ -19,3 +25,6 @@ class Certificate(models.Model):
     subtitle = models.CharField(max_length=255)
     date = models.CharField(max_length=255)
     skills = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.title
