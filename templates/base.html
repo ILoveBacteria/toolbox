@@ -10,6 +10,17 @@
     {% endif %}
 </head>
 <body>
+
+{% if request.user.is_authenticated %}
+    <div>Hello {{ request.user }}!</div>
+{% else %}
+    <a href={% url 'login' %}>Login</a>
+    <a href={% url 'logout' %}>Logout</a>
+{% endif %}
+<hr/>
+<div>
 {% block body %}{% endblock %}
+</div>
+
 </body>
 </html>
