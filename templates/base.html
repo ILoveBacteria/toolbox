@@ -10,17 +10,18 @@
     {% endif %}
 </head>
 <body>
-
-{% if request.user.is_authenticated %}
-    <div>Hello {{ request.user }}!</div>
-{% else %}
-    <a href={% url 'login' %}>Login</a>
-    <a href={% url 'logout' %}>Logout</a>
-{% endif %}
+<header>
+    {% if request.user.is_authenticated %}
+        <div>Hello {{ request.user }}!</div>
+    {% else %}
+        <a href={% url 'login' %}>Login</a>
+        <a href={% url 'logout' %}>Logout</a>
+    {% endif %}
+        <div>Server version: {{ version }}</div>
+</header>
 <hr/>
-<div>
-{% block body %}{% endblock %}
-</div>
-
+<main>
+    {% block body %}{% endblock %}
+</main>
 </body>
 </html>
