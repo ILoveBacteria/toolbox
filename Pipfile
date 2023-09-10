@@ -13,6 +13,7 @@ django-filter = "*"
 django-cors-headers = "*"
 mysqlclient = "*"
 django-sslserver = "*"
+gitpython = "*"
 
 [dev-packages]
 
