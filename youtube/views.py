@@ -18,13 +18,13 @@ def video(request):
             return HttpResponse('Download in progress...')
         return render(
             request,
-            'youtube/download_video.html',
-            context={'form': form, 'title': 'Download Video'},
+            'form.html',
+            context={'form': form, 'title': 'Download Video', 'submit': 'Download'},
             status=400,
         )
     else:
         form = DownloadVideoForm()
-        return render(request, 'youtube/download_video.html', context={'form': form, 'title': 'Download Video'})
+        return render(request, 'form.html', context={'form': form, 'title': 'Download Video', 'submit': 'Download'})
 
 
 @login_required
@@ -43,13 +43,13 @@ def playlist(request):
             return HttpResponse('Download in progress...')
         return render(
             request,
-            'youtube/download_playlist.html',
-            context={'form': form, 'title': 'Download Playlist'},
+            'form.html',
+            context={'form': form, 'title': 'Download Playlist', 'submit': 'Download'},
             status=400,
         )
     else:
         form = DownloadPlaylistForm()
-        return render(request, 'youtube/download_playlist.html', context={'form': form, 'title': 'Download Playlist'})
+        return render(request, 'form.html', context={'form': form, 'title': 'Download Playlist', 'submit': 'Download'})
 
 
 def download_video(url: str):

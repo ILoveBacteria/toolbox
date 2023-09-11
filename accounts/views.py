@@ -17,8 +17,8 @@ class Login(View):
                     return redirect(request.GET['next'])
                 return redirect('/')
             form.add_error(None, 'Username or password is incorrect!')
-        return render(request, 'accounts/login.html', context={'form': form, 'title': 'Login'}, status=400)
+        return render(request, 'form.html', context={'form': form, 'title': 'Login', 'submit': 'Login'}, status=400)
 
     def get(self, request):
         form = LoginForm()
-        return render(request, 'accounts/login.html', context={'form': form, 'title': 'Login'})
+        return render(request, 'form.html', context={'form': form, 'title': 'Login', 'submit': 'Login'})
