@@ -1,3 +1,4 @@
+import os
 from django.db import models
 
 
@@ -21,6 +22,11 @@ class Video(models.Model):
     saved_path = models.CharField(max_length=255, null=True)
     download_url = models.CharField(max_length=255, null=True)
     playlist = models.ForeignKey('Playlist', on_delete=models.CASCADE, null=True)
+
+    def delete(self, *args, **kwargs):
+        if os.path.exists(self.saved_path):
+            os.remove(self.saved_path)
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return self.title
