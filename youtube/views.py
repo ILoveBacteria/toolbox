@@ -71,7 +71,7 @@ def download_playlist(url: str, from_episode: int, to_episode: int):
     playlist_instance = PlaylistModel.objects.create(title=p.title)
     for url in list(p)[from_episode - 1:to_episode]:
         v = YouTube(url)
-        video_instance = playlist_instance.videomodel_set.create(title=v.title)
+        video_instance = playlist_instance.video_set.create(title=v.title)
         destination_saved_path = v.streams \
             .get_highest_resolution() \
             .download(output_path=f'{config["FILE_SERVER"]}/youtube/playlists/{p.title}')
