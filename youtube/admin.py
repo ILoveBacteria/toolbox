@@ -19,10 +19,10 @@ class VideoAdmin(admin.ModelAdmin):
 
     @admin.action
     def zip_files(self, request, queryset):
-        now = datetime.datetime.now()
-        zip_name = now.strftime('%y-%m-%d_%H-%M-%S')
-        path = pathlib.Path(config['FILE_SERVER'], 'archives', f'{zip_name}.zip')
-        with zipfile.ZipFile(path, 'w') as archive:
+        zip_name = datetime.datetime.now().strftime('%y-%m-%d_%H-%M-%S')
+        parent_path = pathlib.Path(config['FILE_SERVER'], 'archives')
+        parent_path.mkdir(exist_ok=True)
+        with zipfile.ZipFile(parent_path / f'{zip_name}.zip', 'w') as archive:
             for obj in queryset:
                 archive.write(obj.saved_path)
         self.message_user(request, 'Successfully archived', messages.SUCCESS)
