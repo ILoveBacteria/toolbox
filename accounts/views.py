@@ -11,7 +11,8 @@ class Login(FormView):
 
     def form_valid(self, form):
         login(self.request, form.get_user())
-        return super().form_valid(form)
+        to = self.request.GET.get('next') or self.success_url
+        return redirect(to)
 
 
 def logout(request):
