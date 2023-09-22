@@ -1,13 +1,12 @@
 import threading
 
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import HttpResponse
 from django.views.generic import FormView
 from pytube import YouTube, Playlist
 
 from server_admin.config_loader import config
-from .forms import *
+from .forms import DownloadVideoForm, DownloadPlaylistForm
 from .models import Playlist as PlaylistModel
 from .models import Video
 
@@ -22,29 +21,29 @@ class DownloadVideoView(LoginRequiredMixin, FormView):
         return HttpResponse('Download in progress...')
 
 
-@login_required
-def playlist(request):
-    if request.method == "POST":
-        form = DownloadPlaylistForm(request.POST)
-        if form.is_valid():
-            threading.Thread(
-                target=download_playlist,
-                args=(
-                    form.cleaned_data['link'],
-                    form.cleaned_data['from_episode'],
-                    form.cleaned_data['to_episode'],
-                )
-            ).start()
-            return HttpResponse('Download in progress...')
-        return render(
-            request,
-            'form.html',
-            context={'form': form, 'title': 'Download Playlist', 'submit': 'Download'},
-            status=400,
-        )
-    else:
-        form = DownloadPlaylistForm()
-        return render(request, 'form.html', context={'form': form, 'title': 'Download Playlist', 'submit': 'Download'})
+class DownloadPlaylistView(LoginRequiredMixin, FormView):
+    form_class = DownloadPlaylistForm
+    template_name = 'form.html'
+
+    def form_valid(self, form):
+        threading.Thread(
+            target=download_playlist,
+            args=(
+                form.cleaned_data['link'],
+                form.cleaned_data['from_episode'],
+                form.cleaned_data['to_episode'],
+            )
+        ).start()
+        return HttpResponse('Download in progress...')
+
+
+# class VideoDetailView(DetailView):
+#     model = Video
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["now"] = timezone.now()
+    #     return context
 
 
 def download_video(url: str):
