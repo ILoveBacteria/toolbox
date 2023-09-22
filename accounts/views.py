@@ -1,27 +1,17 @@
-from django.contrib.auth import login, authenticate, logout as dj_logout
-from django.shortcuts import render, redirect
-from django.views import View
+from django.contrib.auth import login, logout as dj_logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.shortcuts import redirect
+from django.views.generic import FormView
 
-from .forms import LoginForm
 
+class Login(FormView):
+    form_class = AuthenticationForm
+    template_name = 'form.html'
+    success_url = '/'
 
-class Login(View):
-    def post(self, request):
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user = authenticate(request, username=form.cleaned_data['username'],
-                                password=form.cleaned_data['password'])
-            if user is not None:
-                login(request, user)
-                if 'next' in request.GET:
-                    return redirect(request.GET['next'])
-                return redirect('/')
-            form.add_error(None, 'Username or password is incorrect!')
-        return render(request, 'form.html', context={'form': form, 'title': 'Login', 'submit': 'Login'}, status=400)
-
-    def get(self, request):
-        form = LoginForm()
-        return render(request, 'form.html', context={'form': form, 'title': 'Login', 'submit': 'Login'})
+    def form_valid(self, form):
+        login(self.request, form.get_user())
+        return super().form_valid(form)
 
 
 def logout(request):
