@@ -1,30 +1,25 @@
-from django.shortcuts import render, HttpResponse
-from django.contrib.auth.decorators import login_required
-from .forms import *
-from .models import Video
-from .models import Playlist as PlaylistModel
-from pytube import YouTube, Playlist
-from server_admin.config_loader import config
 import threading
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, HttpResponse
+from django.views.generic import FormView
+from pytube import YouTube, Playlist
 
-@login_required
-def video(request):
-    if request.method == "POST":
-        form = DownloadVideoForm(request.POST)
-        if form.is_valid():
-            link = form.cleaned_data['link']
-            threading.Thread(target=download_video, args=(link,)).start()
-            return HttpResponse('Download in progress...')
-        return render(
-            request,
-            'form.html',
-            context={'form': form, 'title': 'Download Video', 'submit': 'Download'},
-            status=400,
-        )
-    else:
-        form = DownloadVideoForm()
-        return render(request, 'form.html', context={'form': form, 'title': 'Download Video', 'submit': 'Download'})
+from server_admin.config_loader import config
+from .forms import *
+from .models import Playlist as PlaylistModel
+from .models import Video
+
+
+class DownloadVideoView(LoginRequiredMixin, FormView):
+    form_class = DownloadVideoForm
+    template_name = 'form.html'
+
+    def form_valid(self, form):
+        link = form.cleaned_data['link']
+        threading.Thread(target=download_video, args=(link,)).start()
+        return HttpResponse('Download in progress...')
 
 
 @login_required
