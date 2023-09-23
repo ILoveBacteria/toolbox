@@ -5,7 +5,7 @@ from django.shortcuts import HttpResponse
 from django.views.generic import DetailView, FormView, ListView
 from pytube import YouTube, Playlist
 
-from server_admin.config_loader import config
+from server_admin import config
 from .forms import DownloadVideoForm, DownloadPlaylistForm
 from .models import Playlist as PlaylistModel
 from .models import Video
