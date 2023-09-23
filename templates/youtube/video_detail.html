@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>{{ object.title }}</h1>
+    <p>status: {{ object.status }}</p>
+    <p>playlist: {{ object.playlist }}</p>
+    <a href={{ object.download_url }}>Download Link</a>
+{% endblock %}

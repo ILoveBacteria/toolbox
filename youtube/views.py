@@ -2,7 +2,7 @@ import threading
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import HttpResponse
-from django.views.generic import FormView
+from django.views.generic import DetailView, FormView, ListView
 from pytube import YouTube, Playlist
 
 from server_admin.config_loader import config
@@ -37,13 +37,12 @@ class DownloadPlaylistView(LoginRequiredMixin, FormView):
         return HttpResponse('Download in progress...')
 
 
-# class VideoDetailView(DetailView):
-#     model = Video
+class VideoDetailView(DetailView):
+    model = Video
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["now"] = timezone.now()
-    #     return context
+
+class VideoListView(ListView):
+    model = Video
 
 
 def download_video(url: str):
