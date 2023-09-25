@@ -1,9 +1,11 @@
+import datetime
 import pathlib
 import zipfile
-import datetime
+
 from django.contrib import admin, messages
+
+from server_admin import config
 from .models import Video, Playlist
-from server_admin.config_loader import config
 
 
 @admin.register(Video)
