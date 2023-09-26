@@ -24,5 +24,5 @@ urlpatterns = [
     path('youtube/', include('youtube.urls')),
     path('accounts/', include('accounts.urls')),
     path('website/', include('website.urls')),
-    path('', core.views.index, name='index'),
+    path('', core.views.index, name='home'),
 ]
