@@ -2,7 +2,8 @@ import threading
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import HttpResponse
-from django.views.generic import DetailView, FormView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, FormView, ListView, UpdateView, DeleteView
 from pytube import YouTube, Playlist
 
 from server_admin import config
@@ -37,19 +38,36 @@ class DownloadPlaylistView(LoginRequiredMixin, FormView):
         return HttpResponse('Download in progress...')
 
 
-class PlaylistDetailView(DetailView):
+class PlaylistDetailView(LoginRequiredMixin, DetailView):
     model = PlaylistModel
 
 
-class PlaylistListView(ListView):
+class PlaylistUpdateView(LoginRequiredMixin, UpdateView):
+    model = PlaylistModel
+    fields = '__all__'
+    template_name = 'form.html'
+
+
+class PlaylistListView(LoginRequiredMixin, ListView):
     model = PlaylistModel
 
 
-class VideoDetailView(DetailView):
+class VideoDeleteView(DeleteView):
+    model = Video
+    success_url = reverse_lazy('video_list')
+
+
+class VideoDetailView(LoginRequiredMixin, DetailView):
     model = Video
 
 
-class VideoListView(ListView):
+class VideoUpdateView(LoginRequiredMixin, UpdateView):
+    model = Video
+    fields = '__all__'
+    template_name = 'form.html'
+
+
+class VideoListView(LoginRequiredMixin, ListView):
     model = Video
 
 

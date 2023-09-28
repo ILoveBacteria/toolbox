@@ -5,4 +5,6 @@
     <p>status: {{ object.status }}</p>
     <p>playlist: {{ object.playlist }}</p>
     <a href={{ object.download_url }}>Download Link</a>
+    <a href={% url 'video_update' object.id %}>Update Fields</a>
+    <a href={% url 'video_delete' object.id %}>Delete</a>
 {% endblock %}
