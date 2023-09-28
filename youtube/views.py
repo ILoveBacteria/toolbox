@@ -37,6 +37,14 @@ class DownloadPlaylistView(LoginRequiredMixin, FormView):
         return HttpResponse('Download in progress...')
 
 
+class PlaylistDetailView(DetailView):
+    model = PlaylistModel
+
+
+class PlaylistListView(ListView):
+    model = PlaylistModel
+
+
 class VideoDetailView(DetailView):
     model = Video
 

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>{{ object.title }}</h1>
+    <ol>
+    {% for video in object.video_set.all %}
+        <li><a href={% url 'video_detail' video.id %}>{{ video.title }}</a></li>
+    {% endfor %}
+    </ol>
+{% endblock %}

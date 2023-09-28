@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>Playlists</h1>
+    <ul>
+        {% for playlist in object_list %}
+            <li><a href={% url 'playlist_detail' playlist.pk %}>{{ playlist.title }}</a> - {{ playlist.video_set.count }}</li>
+        {% empty %}
+            <li>No articles yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
