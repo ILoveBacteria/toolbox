@@ -1,6 +1,14 @@
 from rest_framework import generics
-from .serializers import *
-from .models import *
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .models import Certificate, Education, Experience
+from .serializers import CertificateSerializer, EducationSerializer, ExperienceSerializer
+
+
+@api_view(['GET'])
+def ping(request):
+    return Response({'ok': True})
 
 
 class EducationList(generics.ListAPIView):
