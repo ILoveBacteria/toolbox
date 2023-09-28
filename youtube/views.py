@@ -15,6 +15,7 @@ from .models import Video
 class DownloadVideoView(LoginRequiredMixin, FormView):
     form_class = DownloadVideoForm
     template_name = 'form.html'
+    extra_context = {'title': 'Download Video'}
 
     def form_valid(self, form):
         link = form.cleaned_data['link']
@@ -25,6 +26,7 @@ class DownloadVideoView(LoginRequiredMixin, FormView):
 class DownloadPlaylistView(LoginRequiredMixin, FormView):
     form_class = DownloadPlaylistForm
     template_name = 'form.html'
+    extra_context = {'title': 'Download Playlist'}
 
     def form_valid(self, form):
         threading.Thread(
@@ -41,24 +43,37 @@ class DownloadPlaylistView(LoginRequiredMixin, FormView):
 class PlaylistDetailView(LoginRequiredMixin, DetailView):
     model = PlaylistModel
 
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs, title=f"Playlist {self.kwargs['pk']}")
+
 
 class PlaylistUpdateView(LoginRequiredMixin, UpdateView):
     model = PlaylistModel
     fields = '__all__'
     template_name = 'form.html'
 
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs, title=f"Playlist {self.kwargs['pk']}")
+
 
 class PlaylistListView(LoginRequiredMixin, ListView):
     model = PlaylistModel
+    extra_context = {'title': 'Playlists'}
 
 
 class VideoDeleteView(DeleteView):
     model = Video
     success_url = reverse_lazy('video_list')
 
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs, title=f"Video {self.kwargs['pk']}")
+
 
 class VideoDetailView(LoginRequiredMixin, DetailView):
     model = Video
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs, title=f"Video {self.kwargs['pk']}")
 
 
 class VideoUpdateView(LoginRequiredMixin, UpdateView):
@@ -66,9 +81,13 @@ class VideoUpdateView(LoginRequiredMixin, UpdateView):
     fields = '__all__'
     template_name = 'form.html'
 
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(**kwargs, title=f"Video {self.kwargs['pk']}")
+
 
 class VideoListView(LoginRequiredMixin, ListView):
     model = Video
+    extra_context = {'title': 'Videos'}
 
 
 def download_video(url: str):
