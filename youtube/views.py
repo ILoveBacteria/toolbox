@@ -1,3 +1,4 @@
+import re
 import threading
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -112,9 +113,13 @@ def download_playlist(url: str, from_episode: int, to_episode: int):
         video_instance = playlist_instance.video_set.create(title=v.title)
         destination_saved_path = v.streams \
             .get_highest_resolution() \
-            .download(output_path=f'{config["FILE_SERVER"]}/youtube/playlists/{p.title}')
+            .download(output_path=f'{config["FILE_SERVER"]}/youtube/playlists/{directory_name_cleaner(p.title)}')
         video_instance.status = 'C'
         video_instance.saved_path = destination_saved_path
         video_instance.save()
+
+
+def directory_name_cleaner(name: str):
+    return re.sub('[<>:\"/?|*]', '', name)
 
 # TODO: track last updated videos and download them
