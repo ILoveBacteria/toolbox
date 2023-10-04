@@ -9,9 +9,9 @@ class Tag(models.Model):
 
 
 class Term(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     page = models.PositiveIntegerField()
-    description = models.TextField(null=True)
+    description = models.TextField(blank=True)
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):
