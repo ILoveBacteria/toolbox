@@ -14,6 +14,9 @@
     {% if request.user.is_authenticated %}
         <div>Hello {{ request.user }}!</div>
         <a href={% url 'logout' %}>Logout</a>
+        {% if request.user.is_superuser %}
+            <a href="/admin/">Admin</a>
+        {% endif %}
     {% else %}
         <a href={% url 'login' %}>Login</a>
     {% endif %}
