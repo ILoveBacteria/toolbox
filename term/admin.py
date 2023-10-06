@@ -5,7 +5,11 @@ from .models import Tag, Term
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'count_term')
+
+    @admin.display(description='Number of terms')
+    def count_term(self, obj):
+        return obj.term_set.count()
 
 
 @admin.register(Term)
