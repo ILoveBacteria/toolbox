@@ -1,4 +1,5 @@
 from django.contrib import admin
+from tomark import Tomark
 
 from .models import Tag, Term
 
@@ -18,6 +19,13 @@ class TermAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     search_help_text = 'Search in names'
     list_filter = ('tags',)
+    actions = ('markdown',)
 
     def tag_list(self, obj):
         return ', '.join(obj.tags.values_list('name', flat=True))
+
+    @admin.action
+    def markdown(self, request, queryset):
+        table = Tomark.table(queryset.values())
+        with open('markdown.md', 'w') as f:
+            f.write(table)
