@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, ListView, UpdateView, DeleteView
 from pytube import YouTube, Playlist
 
-from server_admin import config
+from toolbox import config
 from .forms import DownloadVideoForm, DownloadPlaylistForm
 from .models import Playlist as PlaylistModel
 from .models import Video

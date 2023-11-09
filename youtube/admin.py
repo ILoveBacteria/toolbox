@@ -4,7 +4,7 @@ import zipfile
 
 from django.contrib import admin, messages
 
-from server_admin import config
+from toolbox import config
 from .models import Video, Playlist
 
 
