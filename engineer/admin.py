@@ -1,7 +1,7 @@
 from django.contrib import admin
 from tomark import Tomark
 
-from .models import Tag, Term
+from .models import Tag, Term, Footprint
 
 
 @admin.register(Tag)
@@ -10,7 +10,7 @@ class TagAdmin(admin.ModelAdmin):
 
     @admin.display(description='Number of terms')
     def count_term(self, obj):
-        return obj.term_set.count()
+        return obj.term_set.count() + obj.footprint_set.count()
 
 
 @admin.register(Term)
@@ -29,3 +29,13 @@ class TermAdmin(admin.ModelAdmin):
         table = Tomark.table(queryset.values())
         with open('markdown.md', 'w') as f:
             f.write(table)
+
+
+@admin.register(Footprint)
+class FootprintAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at', 'tag_list')
+    search_fields = ('title',)
+    list_filter = ('tags',)
+
+    def tag_list(self, obj):
+        return ', '.join(obj.tags.values_list('name', flat=True))

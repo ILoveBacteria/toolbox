@@ -17,3 +17,13 @@ class Term(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Footprint(models.Model):
+    title = models.CharField(max_length=255)
+    tags = models.ManyToManyField(Tag)
+    created_at = models.DateTimeField(auto_now_add=True)
+    url = models.URLField()
+
+    def __str__(self):
+        return self.title
