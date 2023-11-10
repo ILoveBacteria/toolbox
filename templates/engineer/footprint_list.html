@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>Footprints</h1>
+    <form method="post" action="{% url 'footprint_refresh' %}">
+        {% csrf_token %}
+        <input type="submit" value="Refresh">
+    </form>
+    <ul>
+        {% for footprint in object_list %}
+            <li>{{ footprint.title }} - <a href={% url 'footprint_detail' footprint.pk %}>Detail</a></li>
+        {% empty %}
+            <li>No articles yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

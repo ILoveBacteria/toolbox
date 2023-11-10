@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>{{ object.title }}</h1>
+    <ul>
+        <li>pk: {{ object.pk }}</li>
+        <li><a href="{{ object.url }}" target="_blank">Link</a></li>
+        <li>{{ object.created_at }}</li>
+    </ul>
+{% endblock %}
