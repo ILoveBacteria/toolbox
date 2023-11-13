@@ -1,11 +1,14 @@
 import datetime
 import pathlib
 import zipfile
+import environ
 
 from django.contrib import admin, messages
 
-from toolbox import config
 from .models import Video, Playlist
+
+
+env = environ.Env()
 
 
 @admin.register(Video)
@@ -22,7 +25,7 @@ class VideoAdmin(admin.ModelAdmin):
     @admin.action
     def zip_files(self, request, queryset):
         zip_name = datetime.datetime.now().strftime('%y-%m-%d_%H-%M-%S')
-        parent_path = pathlib.Path(config['FILE_SERVER'], 'archives')
+        parent_path = pathlib.Path(env('FILE_SERVER'), 'archives')
         parent_path.mkdir(exist_ok=True)
         with zipfile.ZipFile(parent_path / f'{zip_name}.zip', 'w') as archive:
             for obj in queryset:

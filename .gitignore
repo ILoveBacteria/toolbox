@@ -4,3 +4,4 @@
 youtube/downloads/
 config.toml
 */__pycache__/
+.env

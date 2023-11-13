@@ -1,5 +1,6 @@
 import re
 import threading
+import environ
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import HttpResponse
@@ -7,10 +8,12 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, ListView, UpdateView, DeleteView
 from pytube import YouTube, Playlist
 
-from toolbox import config
 from .forms import DownloadVideoForm, DownloadPlaylistForm
 from .models import Playlist as PlaylistModel
 from .models import Video
+
+
+env = environ.Env()
 
 
 class DownloadVideoView(LoginRequiredMixin, FormView):
@@ -99,7 +102,7 @@ def download_video(url: str):
     destination_saved_path = v \
         .streams \
         .get_highest_resolution() \
-        .download(output_path=f'{config["FILE_SERVER"]}/youtube/videos')
+        .download(output_path=f'{env("FILE_SERVER")}/youtube/videos')
     video_instance.status = 'C'
     video_instance.saved_path = destination_saved_path
     video_instance.save()
@@ -113,7 +116,7 @@ def download_playlist(url: str, from_episode: int, to_episode: int):
         video_instance = playlist_instance.video_set.create(title=v.title)
         destination_saved_path = v.streams \
             .get_highest_resolution() \
-            .download(output_path=f'{config["FILE_SERVER"]}/youtube/playlists/{directory_name_cleaner(p.title)}')
+            .download(output_path=f'{env("FILE_SERVER")}/youtube/playlists/{directory_name_cleaner(p.title)}')
         video_instance.status = 'C'
         video_instance.saved_path = destination_saved_path
         video_instance.save()

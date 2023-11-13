@@ -17,6 +17,7 @@ gitpython = "*"
 tomark = "*"
 requests = "*"
 bs4 = "*"
+django-environ = "*"
 
 [dev-packages]
 
