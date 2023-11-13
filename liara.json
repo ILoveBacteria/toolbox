@@ -1,0 +1,18 @@
+{
+  "_comment": "This is a config file for Liara Cloud",
+  "platform": "django",
+  "app": "toolbox",
+  "django": {
+    "pythonVersion": "3.10"
+  },
+  "disks": [
+    {
+      "name": "database",
+      "mountTo": "database"
+    },
+    {
+      "name": "file-server",
+      "mountTo": "file-server"
+    }
+  ]
+}
