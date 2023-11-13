@@ -1,11 +1,9 @@
-import requests
-
-from django.shortcuts import redirect, reverse, render
-from django.views.generic import ListView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView, View
 
-from .models import Footprint
 from .forms import FileForm
+from .models import Footprint
 
 
 class FootprintListView(LoginRequiredMixin, ListView):
@@ -16,7 +14,7 @@ class FootprintDetailView(LoginRequiredMixin, DetailView):
     model = Footprint
 
 
-class FootprintExtractor(View):
+class FootprintExtractor(LoginRequiredMixin, View):
     def get(self, request):
         form = FileForm()
         return render(request, template_name='engineer/footprint_extractor.html',

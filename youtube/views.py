@@ -65,7 +65,7 @@ class PlaylistListView(LoginRequiredMixin, ListView):
     extra_context = {'title': 'Playlists'}
 
 
-class VideoDeleteView(DeleteView):
+class VideoDeleteView(LoginRequiredMixin, DeleteView):
     model = Video
     success_url = reverse_lazy('video_list')
 
