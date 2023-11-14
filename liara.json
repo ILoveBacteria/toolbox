@@ -3,12 +3,17 @@
   "platform": "django",
   "app": "toolbox",
   "django": {
-    "pythonVersion": "3.10"
+    "pythonVersion": "3.10",
+    "collectStatic": false
   },
   "disks": [
     {
       "name": "database",
       "mountTo": "database"
+    },
+    {
+      "name": "staticfiles",
+      "mountTo": "staticfiles"
     },
     {
       "name": "file-server",
