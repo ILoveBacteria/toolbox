@@ -19,13 +19,10 @@ env = environ.Env(
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Take environment variables from .env file
 environ.Env.read_env(BASE_DIR / '.env')
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY', cast=str)
@@ -36,7 +33,6 @@ DEBUG = env('DEBUG', cast=bool)
 ALLOWED_HOSTS = env('ALLOWED_HOSTS', cast=list)
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -86,13 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'toolbox.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    'default': env.db()
-}
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -127,15 +116,15 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ALLOWED_ORIGINS = env('CORS_ALLOWED_ORIGINS', cast=list)
 
-SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT', cast=bool)
-
-SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE', cast=bool)
-
-CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE', cast=bool)
