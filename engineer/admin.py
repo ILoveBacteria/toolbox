@@ -1,7 +1,7 @@
 from django.contrib import admin
 from tomark import Tomark
 
-from .models import Tag, Term, Footprint
+from .models import Tag, Term, Footprint, LeetcodeTopic, Leetcode
 
 
 @admin.register(Tag)
@@ -11,6 +11,15 @@ class TagAdmin(admin.ModelAdmin):
     @admin.display(description='Number of terms')
     def count_term(self, obj):
         return obj.term_set.count() + obj.footprint_set.count()
+
+
+@admin.register(LeetcodeTopic)
+class LeetcodeTagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'count_problem')
+
+    @admin.display(description='Number of problems')
+    def count_problem(self, obj):
+        return obj.leetcode_set.count()
 
 
 @admin.register(Term)
@@ -39,3 +48,13 @@ class FootprintAdmin(admin.ModelAdmin):
 
     def tag_list(self, obj):
         return ', '.join(obj.tags.values_list('name', flat=True))
+
+
+@admin.register(Leetcode)
+class LeetcodeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'problem_beauty', 'created_at', 'topic_list')
+    search_fields = ('name',)
+    list_filter = ('topics',)
+
+    def topic_list(self, obj):
+        return ', '.join(obj.topics.values_list('name', flat=True))
