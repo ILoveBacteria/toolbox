@@ -1,5 +1,5 @@
-from . import version
+from .settings.base import VERSION
 
 
 def server_version(request):
-    return {'version': version}
+    return {'version': VERSION}
