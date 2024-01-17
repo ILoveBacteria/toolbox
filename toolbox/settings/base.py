@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 
 import environ
+import requests
 
 env = environ.Env(
     DEBUG=(bool, False)
@@ -127,4 +128,12 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Get app version from GitHub
 
+headers = {
+    'Authorization': f'token {env("GITHUB_TOKEN")}',
+    'X-GitHub-Api-Version': '2022-11-28'
+}
+response = requests.get('https://api.github.com/repos/ILoveBacteria/toolbox/tags', headers=headers)
+
+VERSION = response.json()[0]['name']
