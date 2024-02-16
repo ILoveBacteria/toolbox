@@ -1,0 +1,10 @@
+.idea/
+/db.sqlite3
+youtube/downloads/
+*/__pycache__/
+.env.sample
+.github
+.gitignore
+liara.json
+LICENSE
+README.md
