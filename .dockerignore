@@ -1,10 +1,18 @@
+# Pycharm
 .idea/
-/db.sqlite3
+
+# Cache files
 youtube/downloads/
 */__pycache__/
+
+# Other files
+db.sqlite3
 .env.sample
-.github
-.gitignore
 liara.json
+
+# git
+.github
+.git
+.gitignore
 LICENSE
 README.md

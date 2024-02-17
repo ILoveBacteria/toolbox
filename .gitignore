@@ -1,7 +1,11 @@
+# Pycharm
 .idea/
-*/migrations
-/db.sqlite3
-youtube/downloads/
-config.toml
-*/__pycache__/
+
+# Secret
+db.sqlite3
 .env
+
+# Cache files
+youtube/downloads/
+*/__pycache__/
+*/migrations
