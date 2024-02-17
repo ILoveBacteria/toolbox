@@ -9,21 +9,8 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+from toolbox.settings import BASE_DIR, env
 
-from pathlib import Path
-
-import environ
-import requests
-
-env = environ.Env(
-    DEBUG=(bool, False)
-)
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
-# Take environment variables from .env file
-environ.Env.read_env(BASE_DIR / '.env')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY', cast=str)
@@ -141,13 +128,3 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-
-# Get app version from GitHub
-
-headers = {
-    'Authorization': f'token {env("GITHUB_TOKEN")}',
-    'X-GitHub-Api-Version': '2022-11-28'
-}
-response = requests.get('https://api.github.com/repos/ILoveBacteria/toolbox/tags', headers=headers)
-
-VERSION = response.json()[0]['name']
