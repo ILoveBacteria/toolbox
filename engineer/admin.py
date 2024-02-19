@@ -1,7 +1,7 @@
 from django.contrib import admin
 from tomark import Tomark
 
-from .models import Tag, Term, Footprint, LeetcodeTopic, Leetcode
+from engineer.models import Tag, Term, Footprint, LeetcodeTopic, Leetcode
 
 
 @admin.register(Tag)

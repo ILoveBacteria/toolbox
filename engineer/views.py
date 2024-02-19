@@ -1,14 +1,10 @@
-import environ
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, View
 
+from toolbox.settings import env
 from .forms import FileForm
 from .models import Footprint
-
-
-env = environ.Env()
 
 
 class FootprintListView(LoginRequiredMixin, ListView):

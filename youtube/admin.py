@@ -1,14 +1,11 @@
 import datetime
 import pathlib
 import zipfile
-import environ
 
 from django.contrib import admin, messages
 
-from .models import Video, Playlist
-
-
-env = environ.Env()
+from toolbox.settings import env
+from youtube.models import Video, Playlist
 
 
 @admin.register(Video)

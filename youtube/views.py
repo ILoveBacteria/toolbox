@@ -1,6 +1,5 @@
 import re
 import threading
-import environ
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import HttpResponse
@@ -8,12 +7,10 @@ from django.urls import reverse_lazy
 from django.views.generic import DetailView, FormView, ListView, UpdateView, DeleteView
 from pytube import YouTube, Playlist
 
+from toolbox.settings import env
 from .forms import DownloadVideoForm, DownloadPlaylistForm
 from .models import Playlist as PlaylistModel
 from .models import Video
-
-
-env = environ.Env()
 
 
 class DownloadVideoView(LoginRequiredMixin, FormView):

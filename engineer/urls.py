@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import FootprintListView, FootprintDetailView, FootprintExtractor
+from engineer.views import FootprintListView, FootprintDetailView, FootprintExtractor
+
 
 urlpatterns = [
     path('footprint/', FootprintListView.as_view(), name='footprint_list'),
