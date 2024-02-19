@@ -4,7 +4,7 @@
   "app": "toolbox",
   "django": {
     "pythonVersion": "3.10",
-    "collectStatic": false
+    "collectStatic": true
   },
   "disks": [
     {
@@ -14,10 +14,6 @@
     {
       "name": "staticfiles",
       "mountTo": "staticfiles"
-    },
-    {
-      "name": "file-server",
-      "mountTo": "file-server"
     }
   ]
 }

@@ -6,7 +6,6 @@
 ![Stars](https://img.shields.io/github/stars/ILoveBacteria/toolbox)
 ![Watchers](https://img.shields.io/github/watchers/ILoveBacteria/toolbox)
 [![Last commit](https://img.shields.io/github/last-commit/ILoveBacteria/toolbox)](https://github.com/ILoveBacteria/toolbox/commits/master)
-![python version](https://img.shields.io/github/pipenv/locked/python-version/ILoveBacteria/toolbox?logo=python&logoColor=white)
 ![GitHub tag](https://img.shields.io/github/v/tag/ILoveBacteria/toolbox?color=lightblue&label=last+tag)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ILoveBacteria/toolbox)
 ![Workflow](https://img.shields.io/github/actions/workflow/status/ILoveBacteria/toolbox/liara.yaml?logo=github&label=deploy)

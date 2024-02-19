@@ -42,6 +42,7 @@ class Leetcode(models.Model):
         REVIEW_IF_HAVE_TIME = 2
         GOOD_FOR_REVIEW = 3
         VERY_INSIGHTFUL_IDEA = 4
+
     name = models.CharField(max_length=255)
     problem_beauty = models.IntegerField(choices=Beauty.choices)
     topics = models.ManyToManyField(LeetcodeTopic)

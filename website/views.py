@@ -2,8 +2,8 @@ from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import Certificate, Education, Experience
-from .serializers import CertificateSerializer, EducationSerializer, ExperienceSerializer
+from website.models import Certificate, Education, Experience
+from website.serializers import CertificateSerializer, EducationSerializer, ExperienceSerializer
 
 
 @api_view(['GET'])

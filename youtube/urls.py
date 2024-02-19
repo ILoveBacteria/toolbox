@@ -1,5 +1,6 @@
 from django.urls import path
-from . import views
+
+from youtube import views
 
 
 urlpatterns = [

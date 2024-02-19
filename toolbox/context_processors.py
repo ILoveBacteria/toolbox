@@ -1,4 +1,4 @@
-from .settings.base import VERSION
+from toolbox.settings import VERSION
 
 
 def server_version(request):
