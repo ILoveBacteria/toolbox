@@ -4,7 +4,7 @@
   "app": "toolbox",
   "django": {
     "pythonVersion": "3.10",
-    "collectStatic": true
+    "collectStatic": false
   },
   "disks": [
     {
