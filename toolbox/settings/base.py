@@ -30,8 +30,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'django_cron',
-    'sslserver',
     'youtube',
     'core',
     'accounts',
@@ -48,10 +46,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-CRON_CLASSES = [
-    'engineer.cron.SendMailCron',
 ]
 
 ROOT_URLCONF = 'toolbox.urls'
