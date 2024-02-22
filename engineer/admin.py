@@ -2,7 +2,7 @@ from django.contrib import admin
 from tomark import Tomark
 
 from engineer.models import Tag, Term, Footprint, LeetcodeTopic, Leetcode
-from engineer.tasks import send_term_email_task
+from engineer.tasks import send_email_task
 
 
 @admin.register(Tag)
@@ -43,7 +43,7 @@ class TermAdmin(admin.ModelAdmin):
     @admin.action
     def send_mail(self, request, queryset):
         message = ', '.join(queryset.values_list('name', flat=True))
-        send_term_email_task.delay(message)
+        send_email_task.delay(subject='Review selected terms form admin panel', message=message)
 
 
 @admin.register(Footprint)
