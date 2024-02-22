@@ -2,6 +2,7 @@ from django.contrib import admin
 from tomark import Tomark
 
 from engineer.models import Tag, Term, Footprint, LeetcodeTopic, Leetcode
+from engineer.tasks import send_term_email_task
 
 
 @admin.register(Tag)
@@ -28,7 +29,7 @@ class TermAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     search_help_text = 'Search in names'
     list_filter = ('tags',)
-    actions = ('markdown',)
+    actions = ('markdown', 'send_mail')
 
     def tag_list(self, obj):
         return ', '.join(obj.tags.values_list('name', flat=True))
@@ -38,6 +39,11 @@ class TermAdmin(admin.ModelAdmin):
         table = Tomark.table(queryset.values())
         with open('markdown.md', 'w') as f:
             f.write(table)
+
+    @admin.action
+    def send_mail(self, request, queryset):
+        message = ', '.join(queryset.values_list('name', flat=True))
+        send_term_email_task.delay(message)
 
 
 @admin.register(Footprint)

@@ -3,11 +3,11 @@ from django.core.mail import send_mail
 
 
 @shared_task
-def send_feedback_email_task(message):
+def send_term_email_task(message: str):
     send_mail(
-        'Review your terms',
-        message,
-        'admin@moeinarabi.ir',
-        ['moein.mo81@gmail.com'],
+        subject='Review your terms',
+        message=message,
+        from_email='admin@moeinarabi.ir',
+        recipient_list=['moein.mo81@gmail.com'],
         fail_silently=False,
     )
