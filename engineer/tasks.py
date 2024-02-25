@@ -24,6 +24,6 @@ def send_random_terms_periodic_task():
 
 
 def get_random_terms() -> list:
-    terms = Term.objects.values_list('name', flat=True)
+    terms = list(Term.objects.values_list('name', flat=True))
     random.shuffle(terms)
     return terms[:5]

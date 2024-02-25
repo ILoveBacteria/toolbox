@@ -128,7 +128,3 @@ EMAIL_USE_TLS = True
 
 CELERY_BROKER_URL = env('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
-CELERY_TASK_ROUTES = {
-    'tasks.send_email_task': 'low-priority',
-    'tasks.send_random_terms_periodic_task': 'low-priority',
-}
