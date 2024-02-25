@@ -3,6 +3,7 @@
 
 # Secret
 db.sqlite3
+database/
 .env
 
 # Cache files
