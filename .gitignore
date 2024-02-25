@@ -3,9 +3,13 @@
 
 # Secret
 db.sqlite3
+database/
 .env
 
 # Cache files
 youtube/downloads/
 */__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
 */migrations
+.venv/
