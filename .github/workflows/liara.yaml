@@ -20,3 +20,5 @@ jobs:
           npm i -g @liara/cli@5
           liara deploy --app="$APP_NAME" --api-token="$LIARA_TOKEN" --port=8000 --no-app-logs
           liara shell --app="$APP_NAME" --api-token="$LIARA_TOKEN" --command="python manage.py collectstatic --no-input"
+          liara shell --app="$APP_NAME" --api-token="$LIARA_TOKEN" --command="python manage.py makemigrations"
+          liara shell --app="$APP_NAME" --api-token="$LIARA_TOKEN" --command="python manage.py migrate"
