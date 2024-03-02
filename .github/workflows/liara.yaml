@@ -6,17 +6,21 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    env:
+      LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
+      APP_NAME: "toolbox"
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: "18"
+      - name: install-liara
+        run: npm i -g @liara/cli@5
       - name: update-liara
-        env:
-          LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
-          APP_NAME: "toolbox"
+        run: liara deploy --app="$APP_NAME" --api-token="$LIARA_TOKEN" --port=8000 --no-app-logs
+      - name: collect-static
+        run: liara shell --app="$APP_NAME" --api-token="$LIARA_TOKEN" --command="python manage.py collectstatic --no-input"
+      - name: migrate
         run: |
-          npm i -g @liara/cli@5
-          liara deploy --app="$APP_NAME" --api-token="$LIARA_TOKEN" --port=8000 --no-app-logs
-          liara shell --app="$APP_NAME" --api-token="$LIARA_TOKEN" --command="python manage.py collectstatic --no-input"
+          liara shell --app="$APP_NAME" --api-token="$LIARA_TOKEN" --command="python manage.py makemigrations"
+          liara shell --app="$APP_NAME" --api-token="$LIARA_TOKEN" --command="python manage.py migrate"
