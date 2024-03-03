@@ -4,6 +4,10 @@
 # Cache files
 youtube/downloads/
 */__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+*/migrations
+.venv/
 
 # Other files
 db.sqlite3
