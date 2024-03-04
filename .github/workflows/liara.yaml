@@ -1,19 +1,12 @@
 name: CD-Liara
 
 on:
-  workflow_run:
-    workflows:
-      - CI-Django
-    types:
-      - completed
-    branches:
-      - master
+  workflow_call:
 
 jobs:
   deploy:
 
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     env:
       LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
       APP_NAME: ${{ github.repository }}
