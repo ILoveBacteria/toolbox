@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
-      APP_NAME: ${{ github.repository }}
+      APP_NAME: toolbox
 
     steps:
       - uses: actions/checkout@v3
