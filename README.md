@@ -2,13 +2,10 @@
 
 [![License: MIT](https://img.shields.io/github/license/ILoveBacteria/toolbox)](https://github.com/ILoveBacteria/toolbox/blob/master/LICENSE)
 [![Issues](https://img.shields.io/github/issues/ILoveBacteria/toolbox)](https://github.com/ILoveBacteria/toolbox/issues)
-[![Forks](https://img.shields.io/github/forks/ILoveBacteria/toolbox)](https://github.com/ILoveBacteria/toolbox/network/members)
-![Stars](https://img.shields.io/github/stars/ILoveBacteria/toolbox)
-![Watchers](https://img.shields.io/github/watchers/ILoveBacteria/toolbox)
 [![Last commit](https://img.shields.io/github/last-commit/ILoveBacteria/toolbox)](https://github.com/ILoveBacteria/toolbox/commits/master)
 ![GitHub tag](https://img.shields.io/github/v/tag/ILoveBacteria/toolbox?color=lightblue&label=last+tag)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ILoveBacteria/toolbox)
-![Workflow](https://img.shields.io/github/actions/workflow/status/ILoveBacteria/toolbox/liara.yaml?logo=github&label=deploy)
+![Docker Image Size](https://img.shields.io/docker/image-size/ilovebacteria/toolbox?logo=docker&logoColor=white&cacheSeconds=60)
 ![Website](https://img.shields.io/website?url=https%3A%2F%2Ftoolbox.moeinarabi.ir&label=server%20status&cacheSeconds=120&link=https%3A%2F%2Ftoolbox.moeinarabi.ir)
 
 ## Description
@@ -21,6 +18,34 @@ The repo is deployed on _Liara_ platform, but it may not be always accessible be
 The tools are made to my specific needs, so they may **not** be very useful for others. 
 However, feel free to browse and give feedback.
 
+## How to run
+
+### Docker
+
+Link to Docker [repository](https://hub.docker.com/r/ilovebacteria/toolbox)
+
+```shell
+docker pull ilovebacteria/toolbox:latest
+docker-compose up
+```
+
+### Python
+
+1. Make sure you have Python `3.10` installed.
+2. Get the latest version of the app from [release](https://github.com/ILoveBacteria/toolbox/releases) page.
+3. Install dependencies
+    ```shell
+    pip install -r requirements.txt
+    ```
+4. Config environment variables. The `.env.sample` file contains environment variables that should
+be set in your system.
+This Django app uses the `celery` library, and we use **redis** as message broker for `celery`.
+
+5. Run Django server
+    ```shell
+    python manage.py runserver
+    ```
+
 ## Tools
 
 - Download **Youtube** videos and playlists.
@@ -29,3 +54,5 @@ However, feel free to browse and give feedback.
 - **Notes** about different topics.
 - Host my personal [**website**](https://moeinarabi.ir).
 - ...
+
+
