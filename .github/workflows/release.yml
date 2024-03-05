@@ -13,8 +13,10 @@ jobs:
     needs:
       - test
     uses: ./.github/workflows/liara.yml
+    secrets: inherit
 
   build_image:
     needs:
       - test
     uses: ./.github/workflows/docker.yml
+    secrets: inherit
