@@ -1,7 +1,10 @@
 from django.db import models
 
 
-class Education(models.Model):
+class AbstractInfo(models.Model):
+    class Meta:
+        abstract = True
+
     title = models.CharField(max_length=255)
     subtitle = models.CharField(max_length=255)
     date = models.CharField(max_length=255)
@@ -12,31 +15,21 @@ class Education(models.Model):
         return self.title
 
 
-class Experience(models.Model):
-    title = models.CharField(max_length=255)
-    subtitle = models.CharField(max_length=255)
-    date = models.CharField(max_length=255)
-    skills = models.CharField(max_length=255)
-    company = models.ForeignKey('Company', on_delete=models.RESTRICT)
-
-    def __str__(self):
-        return self.title
+class Education(AbstractInfo):
+    pass
 
 
-class Certificate(models.Model):
-    title = models.CharField(max_length=255)
-    subtitle = models.CharField(max_length=255)
-    date = models.CharField(max_length=255)
-    skills = models.CharField(max_length=255)
-    company = models.ForeignKey('Company', on_delete=models.RESTRICT)
+class Experience(AbstractInfo):
+    pass
 
-    def __str__(self):
-        return self.title
+
+class Certificate(AbstractInfo):
+    link = models.URLField()
 
 
 class Company(models.Model):
     name = models.CharField(max_length=255)
-    logo = models.CharField(max_length=255)
+    logo = models.URLField(max_length=255)
 
     def __str__(self):
         return self.name
