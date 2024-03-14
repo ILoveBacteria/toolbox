@@ -29,7 +29,7 @@ class Certificate(AbstractInfo):
 
 class Company(models.Model):
     name = models.CharField(max_length=255)
-    logo = models.URLField(max_length=255)
+    logo = models.ImageField()
 
     def __str__(self):
         return self.name
