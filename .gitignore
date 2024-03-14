@@ -13,3 +13,6 @@ youtube/downloads/
 */*/*/__pycache__/
 */migrations
 .venv/
+
+# Other
+media/
