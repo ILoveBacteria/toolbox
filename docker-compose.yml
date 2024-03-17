@@ -9,7 +9,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - ./database:/usr/src/app/database
+      - ./db.sqlite3:/usr/src/app/db.sqlite3
     depends_on:
       redis:
         condition: service_healthy
