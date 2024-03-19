@@ -12,6 +12,10 @@
       "mountTo": "database"
     },
     {
+      "name": "media",
+      "mountTo": "media"
+    },
+    {
       "name": "staticfiles",
       "mountTo": "staticfiles"
     }

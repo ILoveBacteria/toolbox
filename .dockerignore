@@ -12,6 +12,7 @@ youtube/downloads/
 # Other files
 db.sqlite3
 database/
+media/
 .env.sample
 liara.json
 
