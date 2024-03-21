@@ -1,5 +1,6 @@
 #!/bin/sh
 
+python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic --no-input
 python -m celery -A toolbox worker -l info &

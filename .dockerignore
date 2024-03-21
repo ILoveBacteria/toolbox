@@ -6,6 +6,7 @@ youtube/downloads/
 */__pycache__/
 */*/__pycache__/
 */*/*/__pycache__/
+*/migrations
 .venv/
 
 # Other files
