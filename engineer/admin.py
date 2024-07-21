@@ -1,7 +1,7 @@
 from django.contrib import admin
 from tomark import Tomark
 
-from engineer.models import Tag, Term, Footprint, LeetcodeTopic, Leetcode
+from engineer.models import Tag, Term, Footprint, LeetcodeTopic, Leetcode, Vocabulary
 from engineer.tasks import send_email_task
 
 
@@ -64,3 +64,9 @@ class LeetcodeAdmin(admin.ModelAdmin):
 
     def topic_list(self, obj):
         return ', '.join(obj.topics.values_list('name', flat=True))
+    
+
+@admin.register(Vocabulary)
+class VocabularyAdmin(admin.ModelAdmin):
+    list_display = ('word', 'seen', 'know')
+    search_fields = ('name',)

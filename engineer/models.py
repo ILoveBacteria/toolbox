@@ -52,3 +52,15 @@ class Leetcode(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class Vocabulary(models.Model):
+    word = models.CharField(max_length=255, unique=True)
+    seen = models.PositiveIntegerField(default=1)
+    know = models.PositiveIntegerField(default=0)
+    example = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.word
