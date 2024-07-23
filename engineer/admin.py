@@ -71,6 +71,28 @@ class VocabularyAdmin(admin.ModelAdmin):
     list_display = ('word', 'seen', 'know', 'know_rate')
     search_fields = ('name',)
     actions = ('know', 'dont_know')
+    readonly_fields = ('created_at', 'updated_at')
+    fieldsets = [
+        (
+            None,
+            {
+                'fields': ('word', 'seen', 'know', 'example'),
+            },
+        ),
+        (
+            'Translate',
+            {
+                'classes': ('collapse',),
+                'fields': ('translation',),
+            },
+        ),
+        (
+            'Data & Time',
+            {
+                'fields': ('created_at', 'updated_at'),
+            },
+        ),
+    ]
 
     @admin.action
     def know(self, request, queryset):
