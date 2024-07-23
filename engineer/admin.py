@@ -68,5 +68,19 @@ class LeetcodeAdmin(admin.ModelAdmin):
 
 @admin.register(Vocabulary)
 class VocabularyAdmin(admin.ModelAdmin):
-    list_display = ('word', 'seen', 'know')
+    list_display = ('word', 'seen', 'know', 'know_rate')
     search_fields = ('name',)
+    actions = ('know', 'dont_know')
+
+    @admin.action
+    def know(self, request, queryset):
+        for obj in queryset:
+            obj.seen += 1
+            obj.know += 1
+            obj.save()
+    
+    @admin.action
+    def dont_know(self, request, queryset):
+        for obj in queryset:
+            obj.seen += 1
+            obj.save()
