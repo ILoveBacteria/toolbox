@@ -58,9 +58,14 @@ class Vocabulary(models.Model):
     word = models.CharField(max_length=255, unique=True)
     seen = models.PositiveIntegerField(default=1)
     know = models.PositiveIntegerField(default=0)
+    translation = models.CharField(max_length=255, blank=True)
     example = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def know_rate(self):
+        return f'{self.know * 100 / self.seen:.1f}%'
 
     def __str__(self) -> str:
         return self.word
