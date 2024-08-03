@@ -69,7 +69,7 @@ class LeetcodeAdmin(admin.ModelAdmin):
 @admin.register(Vocabulary)
 class VocabularyAdmin(admin.ModelAdmin):
     list_display = ('word', 'seen', 'know', 'know_rate')
-    search_fields = ('name',)
+    search_fields = ('word',)
     actions = ('know', 'dont_know')
     readonly_fields = ('created_at', 'updated_at')
     fieldsets = [
