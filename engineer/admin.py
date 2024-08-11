@@ -72,6 +72,7 @@ class VocabularyAdmin(admin.ModelAdmin):
     search_fields = ('word',)
     actions = ('know', 'dont_know')
     readonly_fields = ('created_at', 'updated_at')
+    list_per_page = 10
     fieldsets = [
         (
             None,
