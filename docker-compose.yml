@@ -1,11 +1,9 @@
-version: "3.9"
-
 services:
   web:
     container_name: toolbox
-    image: ghcr.io/ilovebacteria/toolbox:latest
+    build: .
     env_file:
-      - ./.env
+      - .env
     volumes:
       - ./db.sqlite3:/usr/src/app/db.sqlite3:rw
       - static_files_volume:/usr/src/app/staticfiles:rw

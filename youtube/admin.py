@@ -5,6 +5,7 @@ import zipfile
 from django.contrib import admin, messages
 
 from toolbox.settings import env
+from toolbox.settings.base import MEDIA_ROOT
 from youtube.models import Video, Playlist
 
 
@@ -22,7 +23,7 @@ class VideoAdmin(admin.ModelAdmin):
     @admin.action
     def zip_files(self, request, queryset):
         zip_name = datetime.datetime.now().strftime('%y-%m-%d_%H-%M-%S')
-        parent_path = pathlib.Path(env('FILE_SERVER'), 'archives')
+        parent_path = pathlib.Path(MEDIA_ROOT, 'archives')
         parent_path.mkdir(exist_ok=True)
         with zipfile.ZipFile(parent_path / f'{zip_name}.zip', 'w') as archive:
             for obj in queryset:

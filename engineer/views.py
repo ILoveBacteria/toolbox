@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, View
@@ -5,6 +7,7 @@ from django.views.generic import ListView, DetailView, View
 from engineer.forms import FileForm
 from engineer.models import Footprint
 from toolbox.settings import env
+from toolbox.settings.base import MEDIA_ROOT
 
 
 class FootprintListView(LoginRequiredMixin, ListView):
@@ -31,6 +34,7 @@ class FootprintExtractor(LoginRequiredMixin, View):
 
 
 def handle_uploaded_file(f):
-    with open(f'{env("FILE_SERVER")}/temp.html', 'wb') as destination:
+    os.makedirs(MEDIA_ROOT, exist_ok=True)
+    with open(MEDIA_ROOT / 'temp.html', 'wb') as destination:
         for chunk in f.chunks():
             destination.write(chunk)

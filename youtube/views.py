@@ -8,6 +8,7 @@ from django.views.generic import DetailView, FormView, ListView, UpdateView, Del
 from pytube import YouTube, Playlist
 
 from toolbox.settings import env
+from toolbox.settings.base import MEDIA_ROOT
 from .forms import DownloadVideoForm, DownloadPlaylistForm
 from .models import Playlist as PlaylistModel
 from .models import Video
@@ -99,7 +100,7 @@ def download_video(url: str):
     destination_saved_path = v \
         .streams \
         .get_highest_resolution() \
-        .download(output_path=f'{env("FILE_SERVER")}/youtube/videos')
+        .download(output_path=(MEDIA_ROOT / 'youtube' / 'videos'))
     video_instance.status = 'C'
     video_instance.saved_path = destination_saved_path
     video_instance.save()
@@ -113,7 +114,7 @@ def download_playlist(url: str, from_episode: int, to_episode: int):
         video_instance = playlist_instance.video_set.create(title=v.title)
         destination_saved_path = v.streams \
             .get_highest_resolution() \
-            .download(output_path=f'{env("FILE_SERVER")}/youtube/playlists/{directory_name_cleaner(p.title)}')
+            .download(output_path=(MEDIA_ROOT / 'youtube' / 'playlists' / directory_name_cleaner(p.title)))
         video_instance.status = 'C'
         video_instance.saved_path = destination_saved_path
         video_instance.save()
