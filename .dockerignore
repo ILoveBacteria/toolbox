@@ -12,7 +12,7 @@ youtube/downloads/
 db.sqlite3
 database/
 media/
-.env.sample
+*.env
 liara.json
 
 # git
