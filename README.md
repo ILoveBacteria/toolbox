@@ -6,7 +6,7 @@
 ![GitHub tag](https://img.shields.io/github/v/tag/ILoveBacteria/toolbox?color=lightblue&label=last+tag)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ILoveBacteria/toolbox)
 ![Docker Image Size](https://img.shields.io/docker/image-size/ilovebacteria/toolbox?logo=docker&logoColor=white&cacheSeconds=60)
-![Website](https://img.shields.io/website?url=https%3A%2F%2Ftoolbox.moeinarabi.ir%3A2053&label=server%20status&cacheSeconds=120&link=https%3A%2F%2Ftoolbox.moeinarabi.ir%3A2053)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Ftoolbox.moeinarabi.ir&label=server%20status&cacheSeconds=120&link=https%3A%2F%2Ftoolbox.moeinarabi.ir)
 
 ## Description
 
