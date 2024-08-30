@@ -6,16 +6,16 @@
 ![GitHub tag](https://img.shields.io/github/v/tag/ILoveBacteria/toolbox?color=lightblue&label=last+tag)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ILoveBacteria/toolbox)
 ![Docker Image Size](https://img.shields.io/docker/image-size/ilovebacteria/toolbox?logo=docker&logoColor=white&cacheSeconds=60)
-![Website](https://img.shields.io/website?url=https%3A%2F%2Ftoolbox.moeinarabi.ir&label=server%20status&cacheSeconds=120&link=https%3A%2F%2Ftoolbox.moeinarabi.ir)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Ftoolbox.moeinarabi.ir%3A8080&label=server%20status&cacheSeconds=120&link=https%3A%2F%2Ftoolbox.moeinarabi.ir%3A8080)
 
 ## Description
 
-This repo contains a collection of tools that I have developed for my own convenience. 
+This repo contains a collection of tools I developed for my convenience. 
 They are based on the Django framework and various Python libraries.
 
-The repo is deployed on _Liara_ platform, but it may not be always accessible because I switch it off to save costs.
+The repo is deployed on _Liara_ platform, but it may not always be accessible because I switch it off to save costs.
 
-The tools are made to my specific needs, so they may **not** be very useful for others. 
+The tools are made to my specific needs, so they may **not** be beneficial for others. 
 However, feel free to browse and give feedback.
 
 ## How to run
