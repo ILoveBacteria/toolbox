@@ -13,6 +13,7 @@ db.sqlite3
 database/
 media/
 *.env
+*.pem
 liara.json
 
 # git
