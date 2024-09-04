@@ -1,8 +1,11 @@
 import random
 
+import telebot
+from digikala_api import product_detail
 from celery import shared_task
 from django.core.mail import send_mail
 
+from toolbox.settings.base import TELEGRAM_BOT_TOKEN, TELEGRAM_OWNER_CHATID
 from engineer.models import Term
 
 
@@ -15,6 +18,14 @@ def send_email_task(subject: str, message: str):
         recipient_list=['moein.mo81@gmail.com'],
         fail_silently=False,
     )
+
+
+@shared_task
+def send_digikala_product_task(product_id: str):
+    product = product_detail(product_id)
+    message = f'{product.persian_name}\n{product.price}\n\n{product.url}'
+    bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN, parse_mode=None)
+    bot.send_message(TELEGRAM_OWNER_CHATID, message)
 
 
 @shared_task

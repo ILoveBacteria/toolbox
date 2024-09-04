@@ -13,6 +13,7 @@ youtube/downloads/
 */*/__pycache__/
 */*/*/__pycache__/
 .venv/
+.vscode/
 
 # Other
 media/
