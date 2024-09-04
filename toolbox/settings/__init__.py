@@ -8,4 +8,4 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Take environment variables from .env file
 environ.Env.read_env(BASE_DIR / '.env')
 env = environ.Env()
-VERSION = '0.9.5'
+VERSION = '0.10.0'
