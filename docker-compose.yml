@@ -10,11 +10,14 @@ services:
     depends_on:
       redis:
         condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
     healthcheck:
       test: curl --fail http://127.0.0.1:8000/ || exit 1
       interval: 10s
       timeout: 10s
       retries: 5
+
   redis:
     image: redis:7.2
     healthcheck:
@@ -22,6 +25,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
   proxy:
     image: nginx:1.25
     ports:
@@ -34,6 +38,40 @@ services:
       web:
         condition: service_healthy
 
+  elasticsearch:
+    image: elasticsearch:8.15.1
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.license.self_generated.type=basic
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test: curl http://127.0.0.1:9200
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+  
+  kibana:
+    image: kibana:8.15.1
+    env_file:
+      - .env
+    ports:
+      - "127.0.0.1:5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=pass
+      - xpack.security.enabled=true
+      - xpack.license.self_generated.type=basic
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
 volumes:
   static_files_volume:
   media_volume:
+  esdata:

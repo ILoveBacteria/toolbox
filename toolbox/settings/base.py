@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_elasticsearch_dsl',
     'django_celery_beat',
     'rest_framework',
     'corsheaders',
@@ -136,3 +137,11 @@ CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
 
 TELEGRAM_BOT_TOKEN = env('TELEGRAM_BOT_TOKEN')
 TELEGRAM_OWNER_CHATID = env('TELEGRAM_OWNER_CHATID')
+
+# Elasticsearch
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': env('ELASTIC_HOST'),
+    }
+}
