@@ -1,4 +1,11 @@
 from django import forms
+from engineer.models import Vocabulary
+
+
+class VocabForm(forms.ModelForm):
+    class Meta:
+        model = Vocabulary
+        fields = ['word', 'example', 'translation']
 
 
 class FileForm(forms.Form):

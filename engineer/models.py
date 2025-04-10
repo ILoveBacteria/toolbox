@@ -1,5 +1,29 @@
 from django.core.validators import RegexValidator
 from django.db import models
+from django.contrib.auth.models import User
+from datetime import date, timedelta
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    streak = models.IntegerField(default=0)
+    last_seen = models.DateField(null=True, blank=True)
+    total_known = models.IntegerField(default=0)
+
+    def update_streak(self):
+        today = date.today()
+        if self.last_seen != today:
+            if self.last_seen == today - timedelta(days=1):
+                self.streak += 1
+            else:
+                self.streak = 1
+            self.last_seen = today
+            self.save()
+
+    def reset_streak(self):
+        self.streak = 0
+        self.save()
+
 
 
 class Tag(models.Model):

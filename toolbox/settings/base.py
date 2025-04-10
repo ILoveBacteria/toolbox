@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'rest_framework',
     'corsheaders',
+    'widget_tweaks',
     'youtube',
     'core',
     'accounts',

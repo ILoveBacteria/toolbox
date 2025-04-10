@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vocabulary Trainer</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Function to set the theme based on the selected option
+        function setTheme(mode) {
+            if (mode === 'dark') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark'); // Save the selected theme in localStorage
+            } else if (mode === 'light') {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else if (mode === 'system') {
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+                localStorage.setItem('theme', 'system');
+            }
+            updateDropdownText(); // Update button text after changing theme
+        }
+
+        // Function to update the text and icon on the dropdown button
+        function updateDropdownText() {
+            const theme = localStorage.getItem('theme') || 'system';
+            const dropdownButton = document.getElementById('theme-dropdown-button');
+            const icon = document.getElementById('theme-icon');
+            if (theme === 'dark') {
+                dropdownButton.innerHTML = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5.61 12.29a7 7 0 1 1 8.78 0 3 3 0 1 1 1.71 1.76 9 9 0 1 0-12.2 0 3 3 0 1 1 1.71-1.76z"/></svg> Dark Mode`;
+            } else if (theme === 'light') {
+                dropdownButton.innerHTML = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 3.5a6.5 6.5 0 0 0 0 13 6.5 6.5 0 0 0 0-13zM10 2a8 8 0 1 1 0 16A8 8 0 0 1 10 2z"/></svg> Light Mode`;
+            } else {
+                dropdownButton.innerHTML = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 3.5a6.5 6.5 0 0 0 0 13 6.5 6.5 0 0 0 0-13zM10 2a8 8 0 1 1 0 16A8 8 0 0 1 10 2z"/></svg> System Preference`;
+            }
+        }
+
+        // Function to toggle the visibility of the dropdown menu
+        function toggleDropdown() {
+            const dropdown = document.getElementById('theme-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Load theme from localStorage when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            const storedTheme = localStorage.getItem('theme') || 'system';
+            setTheme(storedTheme);
+        });
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center p-4 transition-colors">
+
+<!-- Light/Dark Mode Dropdown -->
+<div class="absolute top-4 right-4 z-10">
+    <div class="relative inline-block text-left">
+        <!-- Main button for dropdown -->
+        <button onclick="toggleDropdown()" type="button" class="bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-full shadow-md focus:outline-none transition-colors flex items-center gap-2" id="theme-dropdown-button">
+            <span id="theme-icon">
+                <!-- Default to Light Mode icon -->
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 3.5a6.5 6.5 0 0 0 0 13 6.5 6.5 0 0 0 0-13zM10 2a8 8 0 1 1 0 16A8 8 0 0 1 10 2z"/>
+                </svg> 
+                Light Mode
+            </span>
+        </button>
+
+        <!-- Dropdown menu -->
+        <div id="theme-dropdown" class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div class="py-1">
+                <a href="#" onclick="setTheme('light')" class="text-gray-700 dark:text-gray-200 block px-4 py-2 text-sm">Light Mode</a>
+                <a href="#" onclick="setTheme('dark')" class="text-gray-700 dark:text-gray-200 block px-4 py-2 text-sm">Dark Mode</a>
+                <a href="#" onclick="setTheme('system')" class="text-gray-700 dark:text-gray-200 block px-4 py-2 text-sm">System Preference</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="w-full max-w-xl bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 space-y-4">
+    {% if vocab %}
+        <h1 class="text-3xl font-bold text-center text-blue-700 dark:text-blue-300">{{ vocab.word }}</h1>
+        <p class="text-gray-700 dark:text-gray-300 italic text-center">{{ vocab.example }}</p>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+            <button id="know-btn"
+                    class="bg-green-500 text-white px-6 py-2 rounded-xl hover:bg-green-600 transition disabled:opacity-50"
+            >
+                Know
+            </button>
+            <button id="dont-know-btn"
+                    class="bg-red-500 text-white px-6 py-2 rounded-xl hover:bg-red-600 transition disabled:opacity-50"
+            >
+                Don't Know
+            </button>
+        </div>
+
+        <p id="translation-box"
+           class="text-center text-lg text-indigo-600 dark:text-indigo-300 font-semibold mt-4 hidden"></p>
+
+        <div class="flex justify-center mt-6">
+            <a href="{% url 'vocab' %}">
+                <button id="next-btn"
+                        class="bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-600 transition disabled:opacity-50"
+                        disabled>
+                    Next Word
+                </button>
+            </a>
+        </div>
+        
+        <!-- Stats display -->
+        <div class="mt-6 text-center text-gray-600 dark:text-gray-300">
+            <p>🔥 <strong>{{ user_profile.streak }}-day streak!</strong></p>
+            <p>Total Known Words: <strong>{{ user_profile.total_known }}</strong></p>
+            <p>Last practiced on: <strong>{{ user_profile.last_seen }}</strong></p>
+        </div>
+
+    {% else %}
+        <p class="text-center text-xl text-gray-600 dark:text-gray-300">No vocabulary available.</p>
+    {% endif %}
+</div>
+
+<script>
+    const vocabId = "{{ vocab.id }}";
+
+    function disableButtons() {
+        $("#know-btn").prop("disabled", true);
+        $("#dont-know-btn").prop("disabled", true);
+        $("#next-btn").prop("disabled", false);
+    }
+
+    function showTranslation(text) {
+        $("#translation-box").text("Translation: " + text).removeClass("hidden");
+    }
+
+    $("#know-btn").click(function () {
+        $.post("{% url 'update_vocab' %}", {
+            id: vocabId,
+            action: "know",
+            csrfmiddlewaretoken: "{{ csrf_token }}"
+        }, function (response) {
+            showTranslation(response.translation); // ✅ now shows translation too
+            disableButtons();
+        });
+    });
+
+    $("#dont-know-btn").click(function () {
+        $.post("{% url 'update_vocab' %}", {
+            id: vocabId,
+            action: "dont_know",
+            csrfmiddlewaretoken: "{{ csrf_token }}"
+        }, function (response) {
+            showTranslation(response.translation);
+            disableButtons();
+        });
+    });
+</script>
+
+</body>
+</html>

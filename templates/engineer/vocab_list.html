@@ -1,0 +1,76 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>Vocabulary List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen p-6">
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6">Vocabulary List</h1>
+
+    <form method="get" class="mb-6 flex gap-2">
+        <input name="q" value="{{ search_query }}" class="flex-1 p-2 rounded bg-gray-800 border border-gray-700 text-white" placeholder="Search...">
+        <button class="bg-blue-600 px-4 py-2 rounded text-white hover:bg-blue-700">Search</button>
+    </form>
+
+    {% for vocab in page_obj %}
+        <div id="vocab-{{ vocab.id }}" class="bg-gray-800 rounded-lg p-4 mb-4 shadow">
+            <h2 class="text-xl font-semibold mb-2">{{ vocab.word }}</h2>
+            <p class="mb-2 text-sm text-gray-300">
+                Seen: {{ vocab.seen }} | Know: {{ vocab.know }} | Know Rate: {{ vocab.know_rate|floatformat:2 }}
+            </p>
+            <div class="flex gap-2 mb-2">
+                <button class="bg-gray-700 text-sm px-3 py-1 rounded hover:bg-gray-600" onclick="toggleExample({{ vocab.id }})">Show Example</button>
+                <button class="bg-gray-700 text-sm px-3 py-1 rounded hover:bg-gray-600" onclick="toggleTranslation({{ vocab.id }})">Show Translation</button>
+            </div>
+            <div id="example-{{ vocab.id }}" class="text-sm italic text-gray-400 hidden">{{ vocab.example }}</div>
+            <div id="translation-{{ vocab.id }}" class="text-sm text-green-400 font-semibold hidden">{{ vocab.translation }}</div>
+
+            <div class="flex gap-2 mt-3">
+                <button class="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-1 rounded" onclick="markVocab({{ vocab.id }}, 'know')">Know</button>
+                <button class="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded" onclick="markVocab({{ vocab.id }}, 'dont_know')">Don't Know</button>
+                <a href="{% url 'edit_vocab' vocab.id %}" class="ml-auto text-blue-400 hover:underline text-sm">Edit</a>
+                <a href="{% url 'delete_vocab' vocab.id %}" class="text-red-400 hover:underline text-sm">Delete</a>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-gray-400">No vocabulary found.</p>
+    {% endfor %}
+
+    <div class="mt-6 flex justify-between items-center">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}&q={{ search_query }}" class="text-blue-400 hover:underline">Previous</a>
+        {% endif %}
+        <span class="text-sm text-gray-400">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}&q={{ search_query }}" class="text-blue-400 hover:underline">Next</a>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function toggleExample(id) {
+        document.getElementById('example-' + id).classList.toggle('hidden');
+    }
+    function toggleTranslation(id) {
+        document.getElementById('translation-' + id).classList.toggle('hidden');
+    }
+    function markVocab(id, action) {
+        $.post("{% url 'update_vocab' %}", {
+            id: id,
+            action: action,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        }, function (data) {
+            let card = $('#vocab-' + id);
+            card.find('p').html(`Seen: ${data.seen} | Know: ${data.know} | Know Rate: ${parseFloat(data.know_rate).toFixed(2)}`);
+            card.find('#example-' + id).removeClass('hidden').text(data.example);
+            card.find('#translation-' + id).removeClass('hidden').text(data.translation);
+        });
+    }
+</script>
+</body>
+</html>
