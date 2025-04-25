@@ -90,19 +90,33 @@ def update_vocab_view(request):
 def vocab_view(request):
     # Get or create the UserProfile
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-    
+
     # Update streak count
     user_profile.update_streak()
 
     # Annotate vocab with knowledge ratio
-    annotated = Vocabulary.objects.annotate(
-        know_ratio=ExpressionWrapper(F("know") * 1.0 / F("seen"), output_field=FloatField())
+    vocab_queryset = Vocabulary.objects.annotate(
+        know_ratio=ExpressionWrapper(
+            F("know") * 1.0 / F("seen"),
+            output_field=FloatField()
+        )
     )
-    
-    min_ratio = annotated.aggregate(min_ratio=Min("know_ratio"))["min_ratio"]
-    candidates = annotated.filter(know_ratio=min_ratio)
 
-    vocab = random.choice(list(candidates)) if candidates else None
+    vocab_list = list(vocab_queryset)
+
+    # Calculate weights: lower know_rate = higher weight (1 - know_rate)
+    weighted_vocab = []
+    weights = []
+
+    for vocab in vocab_list:
+        if vocab.seen > 0:
+            weight = 1.0 - vocab.know_ratio
+        else:
+            weight = 1.0  # If never seen, give full weight
+        weights.append(max(weight, 0.01))  # Avoid 0 weight
+        weighted_vocab.append(vocab)
+
+    vocab = random.choices(weighted_vocab, weights=weights, k=1)[0] if weighted_vocab else None
 
     return render(request, "engineer/vocab.html", {
         "vocab": vocab,
