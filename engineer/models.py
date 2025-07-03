@@ -14,16 +14,15 @@ class UserProfile(models.Model):
         today = date.today()
         if self.last_seen != today:
             if self.last_seen == today - timedelta(days=1):
-                self.streak += 1
+                self.streak = F('streak') + 1
             else:
                 self.streak = 1
             self.last_seen = today
-            self.save()
+            self.save(update_fields=['streak', 'last_seen'])
 
     def reset_streak(self):
         self.streak = 0
         self.save()
-
 
 
 class Tag(models.Model):
@@ -76,7 +75,7 @@ class Leetcode(models.Model):
 
     def __str__(self):
         return self.name
-    
+
 
 class Vocabulary(models.Model):
     word = models.CharField(max_length=255, unique=True)
@@ -89,6 +88,8 @@ class Vocabulary(models.Model):
 
     @property
     def know_rate(self):
+        if self.seen == 0:
+            return '0.0%'
         return f'{self.know * 100 / self.seen:.1f}%'
 
     def __str__(self) -> str:
