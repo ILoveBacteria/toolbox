@@ -2,6 +2,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import date, timedelta
+from django.db.models import F
 
 
 class UserProfile(models.Model):
